@@ -39,8 +39,7 @@ def _size():
 
 
 def _vscroll(clicks, x=None, y=None):
-    clicks = int(clicks)
-    if clicks == 0:
+    if (clicks := int(clicks)) == 0:
         return
     elif clicks > 0:
         button = 4 # scroll up
@@ -52,8 +51,7 @@ def _vscroll(clicks, x=None, y=None):
 
 
 def _hscroll(clicks, x=None, y=None):
-    clicks = int(clicks)
-    if clicks == 0:
+    if (clicks := int(clicks)) == 0:
         return
     elif clicks > 0:
         button = 7 # scroll right
@@ -119,8 +117,7 @@ def _keyDown(key):
         _display.sync()
         return
 
-    needsShift = pyautogui.isShiftCharacter(key)
-    if needsShift:
+    if needsShift := pyautogui.isShiftCharacter(key):
         fake_input(_display, X.KeyPress, keyboardMapping['shift'])
 
     fake_input(_display, X.KeyPress, keyboardMapping[key])

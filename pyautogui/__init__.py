@@ -1804,8 +1804,7 @@ def _getNumberToken(commandStr):
     Raises an exception if it can't tokenize a number.
     """
     pattern = re.compile(r"^(\s*(\+|\-)?\d+(\.\d+)?)")
-    mo = pattern.search(commandStr)
-    if mo is None:
+    if (mo := pattern.search(commandStr)) is None:
         raise PyAutoGUIException("Invalid command at index 0: a number was expected")
 
     return mo.group(1)
@@ -1821,8 +1820,7 @@ def _getQuotedStringToken(commandStr):
     Raises an exception if it can't tokenize a quoted string.
     """
     pattern = re.compile(r"^((\s*)('(.*?)'))")
-    mo = pattern.search(commandStr)
-    if mo is None:
+    if (mo := pattern.search(commandStr)) is None:
         raise PyAutoGUIException("Invalid command at index 0: a quoted string was expected")
 
     return mo.group(1)
@@ -1841,8 +1839,7 @@ def _getParensCommandStrToken(commandStr):
 
     # Check to make sure at least one open parenthesis exists:
     pattern = re.compile(r"^\s*\(")
-    mo = pattern.search(commandStr)
-    if mo is None:
+    if (mo := pattern.search(commandStr)) is None:
         raise PyAutoGUIException("Invalid command at index 0: No open parenthesis found.")
 
     # Check to make sure the parentheses are balanced:
@@ -1874,8 +1871,7 @@ def _getCommaToken(commandStr):
     Raises an exception if a comma isn't found.
     """
     pattern = re.compile(r"^((\s*),)")
-    mo = pattern.search(commandStr)
-    if mo is None:
+    if (mo := pattern.search(commandStr)) is None:
         raise PyAutoGUIException("Invalid command at index 0: a comma was expected")
 
     return mo.group(1)
@@ -1896,8 +1892,7 @@ def _tokenizeCommandStr(commandStr):
             i += 1
             continue
 
-        mo = commandPattern.match(commandStr[i:])
-        if mo is None:
+        if (mo := commandPattern.match(commandStr[i:])) is None:
             raise PyAutoGUIException("Invalid command at index %s: %s is not a valid command" % (i, commandStr[i]))
 
         individualCommand = mo.group(1)
@@ -2011,9 +2006,8 @@ def _runCommandList(commandList, _ssCount):
     global PAUSE
     i = 0
     while i < len(commandList):
-        command = commandList[i]
 
-        if command == "c":
+        if (command := commandList[i]) == "c":
             click(button=PRIMARY)
         elif command == "l":
             click(button=LEFT)
